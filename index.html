@@ -1,298 +1,607 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sawa – Support</title>
-  <meta name="description" content="Support center for Sawa, the private app built for couples." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sawa · سوا — a private app for two</title>
+  <meta name="description" content="Sawa is a private app for couples: chat, a daily question, shared memories, games and everyday tools. Help, FAQ and contact." />
+  <meta name="theme-color" content="#FAF9F6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121013" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://sawacouples.com/" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sawa" />
+  <meta property="og:title" content="Sawa · سوا" />
+  <meta property="og:description" content="A private app for two: chat, a daily question, shared memories, games and everyday tools." />
+  <meta property="og:url" content="https://sawacouples.com/" />
+  <meta property="og:image" content="https://sawacouples.com/icon.png" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- Applied before first paint so a saved choice never flashes the other one. -->
+  <script>
+    (function () {
+      var r = document.documentElement;
+      try {
+        var th = localStorage.getItem('sawa-theme');
+        if (th === 'dark' || th === 'light') r.setAttribute('data-theme', th);
+        var lg = localStorage.getItem('sawa-lang');
+        if (!lg) lg = (navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
+        if (lg === 'ar') { r.setAttribute('lang', 'ar'); r.setAttribute('dir', 'rtl'); }
+      } catch (e) {}
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; scroll-padding-top: 80px; }
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    :root, [data-theme="light"] {
-      --color-bg: #fdf8f5; --color-surface: #fff; --color-surface-2: #fef9f7;
-      --color-surface-offset: #f5ede8; --color-divider: #ecddd7; --color-border: #e4d5ce;
-      --color-text: #2a1a14; --color-text-muted: #7a5f56; --color-text-faint: #b89d96;
-      --color-primary: #c05a3a; --color-primary-hover: #a34429; --color-primary-highlight: #fde8de;
-      --shadow-sm: 0 1px 3px rgba(80,30,10,0.07); --shadow-md: 0 4px 16px rgba(80,30,10,0.09);
-      --shadow-lg: 0 12px 40px rgba(80,30,10,0.12);
-      --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
-      --radius-xl: 1.25rem; --radius-full: 9999px;
-      --font-display: "Instrument Serif", Georgia, serif;
-      --font-body: "DM Sans", "Helvetica Neue", sans-serif;
-      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-      --text-hero: clamp(2.5rem, 1rem + 4vw, 4.5rem);
-      --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem;
-      --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
-      --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
-      --content-default: 960px; --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  <style>
+    /* Tokens mirror the app's useThemeColors / colors.ts: warm cream and warm
+       charcoal neutrals, with the brand rose as the one colour that talks. */
+    :root {
+      --bg: #FAF9F6;
+      --card: #FFFFFF;
+      --muted: #F3F0F4;
+      --text: #211D24;
+      --text-sec: #6B6470;
+      --border: rgba(0, 0, 0, 0.07);
+      --rose: #E75480;            /* brand: fills, glows, never small text */
+      --rose-strong: #C93A63;     /* small text and buttons: AA on cream and white */
+      --rose-wash: #FDF0F4;
+      --rose-line: #FAD9E4;
+      --on-rose: #FFFFFF;
+      --glass: rgba(250, 249, 246, 0.74);
+      --shadow: 0 1px 2px rgba(33, 29, 36, 0.04), 0 8px 28px rgba(33, 29, 36, 0.06);
+      --shadow-lift: 0 2px 4px rgba(33, 29, 36, 0.05), 0 16px 40px rgba(33, 29, 36, 0.10);
+      --glow: rgba(231, 84, 128, 0.18);
+
+      --font-latin: "Poppins", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+      --font-arabic: "IBM Plex Sans Arabic", "Geeza Pro", "Segoe UI", sans-serif;
+      --font: var(--font-latin), var(--font-arabic);
+
+      --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-full: 999px;
+      --page: 1040px;
+      --gutter: clamp(16px, 5vw, 40px);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
-    [data-theme="dark"] {
-      --color-bg: #18100d; --color-surface: #1f1511; --color-surface-2: #241912;
-      --color-surface-offset: #2e2017; --color-divider: #3a2820; --color-border: #4a342a;
-      --color-text: #f0e0d8; --color-text-muted: #c09080; --color-text-faint: #7a5f56;
-      --color-primary: #e87a55; --color-primary-hover: #f08c6a; --color-primary-highlight: #3d1f14;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
-    }
+    :root[data-theme="dark"] { color-scheme: dark; }
+
     @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        --color-bg: #18100d; --color-surface: #1f1511; --color-surface-2: #241912;
-        --color-surface-offset: #2e2017; --color-divider: #3a2820; --color-border: #4a342a;
-        --color-text: #f0e0d8; --color-text-muted: #c09080; --color-text-faint: #7a5f56;
-        --color-primary: #e87a55; --color-primary-hover: #f08c6a; --color-primary-highlight: #3d1f14;
-        --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-        --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #121013; --card: #1A171B; --muted: #241F26;
+        --text: #F5F1F3; --text-sec: #A39BA1; --border: #2E2832;
+        --rose-strong: #F27A9D; --rose-wash: #2A1820; --rose-line: #4A2434;
+        --on-rose: #1A0A10;
+        --glass: rgba(18, 16, 19, 0.72);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
+        --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5);
+        --glow: rgba(231, 84, 128, 0.22);
       }
     }
-
-    body { min-height: 100dvh; font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background: var(--color-bg); line-height: 1.65; }
-    img, svg { display: block; max-width: 100%; }
-    p, li { text-wrap: pretty; }
-    h1, h2, h3 { text-wrap: balance; }
-    a { color: var(--color-primary); text-decoration: none; transition: color var(--transition); }
-    a:hover { color: var(--color-primary-hover); }
-    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
-    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
-
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-4) clamp(var(--space-6), 5vw, var(--space-16));
-      background: color-mix(in oklch, var(--color-bg) 85%, transparent);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-divider);
+    :root[data-theme="dark"] {
+      --bg: #121013; --card: #1A171B; --muted: #241F26;
+      --text: #F5F1F3; --text-sec: #A39BA1; --border: #2E2832;
+      --rose-strong: #F27A9D; --rose-wash: #2A1820; --rose-line: #4A2434;
+      --on-rose: #1A0A10;
+      --glass: rgba(18, 16, 19, 0.72);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
+      --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5);
+      --glow: rgba(231, 84, 128, 0.22);
     }
-    .nav-logo { display: flex; align-items: center; gap: var(--space-3); font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text); letter-spacing: -0.01em; }
-    .nav-logo span { color: var(--color-text-muted); font-size: var(--text-sm); font-family: var(--font-body); }
-    .nav-links { display: flex; align-items: center; gap: var(--space-6); }
-    .nav-links a { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 500; }
-    .nav-links a:hover { color: var(--color-text); }
-    .theme-toggle { width: 36px; height: 36px; border-radius: var(--radius-full); display: grid; place-items: center; color: var(--color-text-muted); transition: color var(--transition), background var(--transition); }
-    .theme-toggle:hover { color: var(--color-text); background: var(--color-surface-offset); }
 
-    .hero { text-align: center; padding: clamp(var(--space-16), 10vw, var(--space-24)) clamp(var(--space-6), 5vw, var(--space-16)); max-width: var(--content-default); margin: 0 auto; }
-    .hero-badge { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-primary-highlight); color: var(--color-primary); font-size: var(--text-xs); font-weight: 700; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); margin-bottom: var(--space-6); letter-spacing: 0.05em; text-transform: uppercase; }
-    .hero h1 { font-family: var(--font-display); font-size: var(--text-hero); line-height: 1.1; color: var(--color-text); margin-bottom: var(--space-5); }
-    .hero h1 em { font-style: italic; color: var(--color-primary); }
-    .hero p { font-size: var(--text-lg); color: var(--color-text-muted); max-width: 52ch; margin: 0 auto var(--space-10); }
-    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* Plex Arabic sets smaller than Poppins at the same size, so the whole rem scale steps up; and Arabic needs more leading than Latin, and no tracking. */
+    :root[lang="ar"] { font-size: 106.25%; }
+    :root[lang="ar"] body { line-height: 1.85; }
+    :root[lang="ar"] * { letter-spacing: 0 !important; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: var(--rose-strong); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    p, li { text-wrap: pretty; }
+    h1, h2, h3 { text-wrap: balance; line-height: 1.2; }
+    :focus-visible { outline: 2px solid var(--rose-strong); outline-offset: 3px; border-radius: 8px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .skip { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 200; background: var(--card); color: var(--text); padding: 10px 16px; border-radius: var(--r-full); box-shadow: var(--shadow); }
+    .skip:focus { top: 12px; }
 
-    .btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; transition: background var(--transition), box-shadow var(--transition), transform var(--transition); }
+    /* ── Top bar: glass over the page, as the app's floating chrome is ───────── */
+    .bar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--glass);
+      -webkit-backdrop-filter: saturate(180%) blur(18px);
+      backdrop-filter: saturate(180%) blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .bar-in {
+      max-width: var(--page); margin: 0 auto;
+      padding: 10px var(--gutter);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; font-size: 1.05rem; }
+    .brand:hover { text-decoration: none; }
+    .brand img { width: 32px; height: 32px; border-radius: 9px; box-shadow: 0 1px 4px rgba(231, 84, 128, 0.35); }
+    .brand .ar { color: var(--text-sec); font-weight: 500; font-family: var(--font-arabic); }
+    .links { display: flex; align-items: center; gap: 4px; }
+    .links a.nav { color: var(--text-sec); font-size: 0.9rem; font-weight: 500; padding: 8px 12px; border-radius: var(--r-full); }
+    .links a.nav:hover { color: var(--text); background: var(--muted); text-decoration: none; }
+    .chip-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 40px; height: 40px; padding: 0 12px;
+      border-radius: var(--r-full); color: var(--text-sec);
+      font-size: 0.85rem; font-weight: 600;
+      transition: background 160ms var(--ease), color 160ms var(--ease);
+    }
+    .chip-btn:hover { background: var(--muted); color: var(--text); }
+    .chip-btn svg { width: 19px; height: 19px; }
+    :root[lang="ar"] #lang { font-family: var(--font-latin); }
+
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .hero { position: relative; text-align: center; padding: clamp(48px, 9vw, 96px) var(--gutter) clamp(40px, 7vw, 72px); overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; z-index: 0; inset-inline: 0; top: -120px; height: 520px;
+      background: radial-gradient(closest-side at 50% 40%, var(--glow), transparent 72%);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .app-icon {
+      width: 112px; height: 112px; margin: 0 auto 28px; border-radius: 26px;
+      box-shadow: 0 2px 6px rgba(231, 84, 128, 0.25), 0 18px 40px rgba(231, 84, 128, 0.28);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .eyebrow {
+      display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--rose-strong); background: var(--rose-wash); border: 1px solid var(--rose-line);
+      padding: 4px 14px; border-radius: var(--r-full); margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(2.2rem, 1.2rem + 4.4vw, 3.9rem); font-weight: 700; margin: 0 auto 18px; max-width: 16ch; }
+    .hero h1 em { font-style: normal; color: var(--rose-strong); }
+    .hero p.lead { font-size: clamp(1.02rem, 0.95rem + 0.4vw, 1.2rem); color: var(--text-sec); max-width: 50ch; margin: 0 auto 32px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 48px; padding: 0 26px; border-radius: var(--r-full);
+      font-weight: 600; font-size: 0.97rem;
+      transition: transform 160ms var(--ease), box-shadow 160ms var(--ease), background 160ms var(--ease);
+    }
+    .btn:hover { text-decoration: none; }
     .btn:active { transform: scale(0.98); }
-    .btn-primary { background: var(--color-primary); color: #fff; box-shadow: var(--shadow-sm); }
-    .btn-primary:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-md); color: #fff; }
-    .btn-ghost { background: var(--color-surface-offset); color: var(--color-text); }
-    .btn-ghost:hover { background: var(--color-divider); color: var(--color-text); }
+    .btn svg { width: 18px; height: 18px; }
+    .btn-primary { background: var(--rose-strong); color: var(--on-rose); box-shadow: 0 6px 20px var(--glow); }
+    .btn-primary:hover { box-shadow: 0 10px 28px var(--glow); transform: translateY(-1px); }
+    .btn-soft { background: var(--card); color: var(--text); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .btn-soft:hover { transform: translateY(-1px); }
 
-    .section { padding: clamp(var(--space-12), 8vw, var(--space-20)) clamp(var(--space-6), 5vw, var(--space-16)); }
-    .section-inner { max-width: var(--content-default); margin: 0 auto; }
-    .section-label { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-3); }
-    .section h2 { font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-text); margin-bottom: var(--space-4); line-height: 1.15; }
-    .section-sub { font-size: var(--text-base); color: var(--color-text-muted); max-width: 58ch; margin-bottom: var(--space-10); }
-    .divider { border: none; border-top: 1px solid var(--color-divider); }
+    /* ── Sections ─────────────────────────────────────────────────────────── */
+    section.block { padding: clamp(44px, 7vw, 80px) var(--gutter); }
+    .wrap { max-width: var(--page); margin: 0 auto; }
+    .label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rose-strong); margin-bottom: 10px; }
+    .block h2 { font-size: clamp(1.6rem, 1.1rem + 2vw, 2.4rem); font-weight: 700; margin-bottom: 12px; }
+    .sub { color: var(--text-sec); max-width: 56ch; margin-bottom: 36px; }
 
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: var(--space-4); }
-    .feature-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-sm); transition: box-shadow var(--transition), transform var(--transition); }
-    .feature-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .feature-icon { font-size: 1.6rem; margin-bottom: var(--space-4); width: 48px; height: 48px; display: grid; place-items: center; }
-    .feature-card h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-2); color: var(--color-text); }
-    .feature-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 24px; box-shadow: var(--shadow);
+      transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+    .card h3 { font-size: 1.05rem; font-weight: 600; margin: 16px 0 6px; }
+    .card p { color: var(--text-sec); font-size: 0.94rem; line-height: 1.65; }
+    :root[lang="ar"] .card p { line-height: 1.8; }
 
-    .faq-list { display: flex; flex-direction: column; gap: var(--space-3); }
-    details { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow var(--transition); }
-    details[open] { box-shadow: var(--shadow-sm); }
-    summary { padding: var(--space-5) var(--space-6); font-weight: 600; font-size: var(--text-base); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); color: var(--color-text); transition: background var(--transition); }
-    summary:hover { background: var(--color-surface-2); }
+    /* A solid chip with a faint wash of the same colour, as Home spends the catalog's accents. */
+    .chip {
+      --a: var(--rose);
+      width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+      color: #fff; background: var(--a);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--a) 32%, transparent);
+    }
+    .chip svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .c-chat { --a: #E75480; } .c-ask { --a: #6366F1; } .c-mem { --a: #7C3AED; }
+    .c-game { --a: #0D9488; } .c-tog { --a: #D97706; } .c-faith { --a: #059669; }
+    .c-lock { --a: #E75480; } .c-mail { --a: #E75480; } .c-time { --a: #6366F1; }
+
+    /* Private band */
+    .private { background: var(--rose-wash); border-block: 1px solid var(--rose-line); }
+    .private .card { background: var(--card); }
+    .private .chip svg { stroke-width: 2.1; }
+
+    /* Steps */
+    .steps { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); counter-reset: s; }
+    .step { position: relative; padding: 24px; border-radius: var(--r-lg); background: var(--muted); }
+    .step::before {
+      counter-increment: s; content: counter(s);
+      display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+      background: var(--rose-strong); color: var(--on-rose); font-weight: 700; font-size: 0.95rem; margin-bottom: 14px;
+    }
+    .step h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 4px; }
+    .step p { color: var(--text-sec); font-size: 0.94rem; }
+
+    /* FAQ */
+    .faq { display: grid; gap: 10px; max-width: 760px; }
+    details { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); box-shadow: var(--shadow); overflow: hidden; }
+    summary {
+      list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 18px 20px; font-weight: 600; font-size: 0.99rem; min-height: 56px;
+    }
     summary::-webkit-details-marker { display: none; }
-    .summary-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: var(--radius-full); background: var(--color-surface-offset); display: grid; place-items: center; color: var(--color-text-muted); font-size: 16px; transition: transform var(--transition), background var(--transition); }
-    details[open] .summary-icon { transform: rotate(45deg); background: var(--color-primary-highlight); color: var(--color-primary); }
-    .faq-body { padding: 0 var(--space-6) var(--space-5); font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-divider); }
-    .faq-body p { padding-top: var(--space-4); max-width: 68ch; }
-    .faq-body a { color: var(--color-primary); text-decoration: underline; }
+    summary:hover { background: var(--muted); }
+    .plus { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--muted); display: grid; place-items: center; color: var(--text-sec); transition: transform 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease); }
+    .plus svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; fill: none; }
+    details[open] .plus { transform: rotate(45deg); background: var(--rose-wash); color: var(--rose-strong); }
+    .ans { padding: 0 20px 20px; color: var(--text-sec); font-size: 0.95rem; }
+    .ans a { text-decoration: underline; text-underline-offset: 3px; }
+    .ans strong { color: var(--text); font-weight: 600; }
 
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--space-4); }
-    .contact-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-8) var(--space-6); text-align: center; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
-    .contact-card-icon { width: 52px; height: 52px; border-radius: var(--radius-full); background: var(--color-primary-highlight); color: var(--color-primary); display: grid; place-items: center; font-size: 1.4rem; }
-    .contact-card h3 { font-weight: 700; font-size: var(--text-base); }
-    .contact-card p { font-size: var(--text-sm); color: var(--color-text-muted); max-width: 28ch; }
-    .contact-card a.btn { margin-top: var(--space-2); }
+    /* Contact */
+    .contact { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); max-width: 760px; }
+    .contact .card { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .contact .card h3 { margin-top: 12px; }
+    .contact .card p { margin-bottom: 14px; }
+    .contact .card .btn { margin-top: auto; max-width: 100%; }
+    .contact .card .btn span { overflow-wrap: anywhere; }
 
-    footer { background: var(--color-surface); border-top: 1px solid var(--color-divider); padding: var(--space-10) clamp(var(--space-6), 5vw, var(--space-16)); }
-    .footer-inner { max-width: var(--content-default); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4); }
-    .footer-logo { font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text-muted); }
-    .footer-links { display: flex; gap: var(--space-6); flex-wrap: wrap; }
-    .footer-links a { font-size: var(--text-sm); color: var(--color-text-muted); }
-    .footer-links a:hover { color: var(--color-text); }
-    .footer-copy { font-size: var(--text-xs); color: var(--color-text-faint); width: 100%; margin-top: var(--space-4); }
+    footer { border-top: 1px solid var(--border); padding: 32px var(--gutter) calc(32px + env(safe-area-inset-bottom)); }
+    .foot { max-width: var(--page); margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
+    .foot .brand { font-size: 1rem; }
+    .foot nav { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+    .foot nav a { color: var(--text-sec); font-size: 0.9rem; }
+    .foot nav a:hover { color: var(--text); }
+    .copy { width: 100%; color: var(--text-sec); font-size: 0.82rem; }
 
-    @media (max-width: 600px) {
-      .nav-links a:not(:last-child) { display: none; }
+    @media (max-width: 640px) {
+      .links a.nav { display: none; }
+      .app-icon { width: 96px; height: 96px; border-radius: 22px; }
+      .btn { width: 100%; max-width: 340px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
-<nav>
-  <a href="#" class="nav-logo" aria-label="Sawa home">
-    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path d="M5.5 13.5C5.5 11 7.5 9 10 9s4.5 2 4.5 4.5c0 2-1.2 3.7-3 4.8L16 24l4.5-5.7C22.3 17.2 26.5 15.5 26.5 13.5 26.5 11 24.5 9 22 9s-4.5 2-4.5 4.5c0 2 1.2 3.7 3 4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    Sawa <span>سوا</span>
-  </a>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="hero-badge">💬 Support Center</div>
-  <h1>We're here to<br/><em>help you</em></h1>
-  <p>Find answers, report issues, or get in touch with the Sawa team. We're dedicated to making your experience the best it can be.</p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn btn-primary">Contact Support</a>
-    <a href="#faq" class="btn btn-ghost">Browse FAQ</a>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<section class="section" id="features">
-  <div class="section-inner">
-    <p class="section-label">App Features</p>
-    <h2>Everything Sawa offers</h2>
-    <p class="section-sub">A quick overview of what's inside the app to help you find exactly what you need support with.</p>
-    <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon">💬</div><h3>Chat</h3><p>Private messaging designed for two — messages, photos, voice notes, and real-time reactions.</p></div>
-      <div class="feature-card"><div class="feature-icon">✅</div><h3>Shared To-Do Lists</h3><p>Plan together with shared checklists for groceries, goals, and anything you're building as a couple.</p></div>
-      <div class="feature-card"><div class="feature-icon">✈️</div><h3>Travel Planning</h3><p>Create trip checklists with destination and dates, and get a ready-made packing template automatically.</p></div>
-      <div class="feature-card"><div class="feature-icon">📓</div><h3>Shared Journal</h3><p>Write entries, add photos, and build a private diary that belongs to both of you.</p></div>
-      <div class="feature-card"><div class="feature-icon">🎬</div><h3>Movie Nights</h3><p>Keep a shared watch list, track what you've seen, and rate movies together.</p></div>
-      <div class="feature-card"><div class="feature-icon">🌙</div><h3>Ramadan Together</h3><p>Track your days, read Azkar, and share the spirit of the season with your partner.</p></div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<section class="section" id="faq">
-  <div class="section-inner">
-    <p class="section-label">FAQ</p>
-    <h2>Common questions</h2>
-    <p class="section-sub">Can't find an answer? Reach out directly and we'll get back to you as soon as possible.</p>
-    <div class="faq-list">
-
-      <details>
-        <summary>How do I connect with my partner? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>After creating your account, go to the <strong>Partner</strong> section and share your unique invite link or code. Once they accept, you'll both be connected inside the app.</p></div>
-      </details>
-
-      <details>
-        <summary>Is my data private and secure? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Yes. Sawa is built exclusively for you and your partner. Your messages, journal entries, and shared content are only visible to the two of you and are never shared with third parties.</p></div>
-      </details>
-
-      <details>
-        <summary>I can't sign in to my account. What should I do? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Try these steps: (1) Make sure you're using the correct phone number or email. (2) Request a new OTP if the code expired. (3) Check your internet connection. If the issue persists, <a href="mailto:info@sawacouples.com">contact us</a> and we'll help you recover your account.</p></div>
-      </details>
-
-      <details>
-        <summary>How do I delete my account? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Go to <strong>Settings → Account → Delete Account</strong> inside the app. This permanently removes all your data including messages and journal entries. This action cannot be undone.</p></div>
-      </details>
-
-      <details>
-        <summary>Notifications are not working — how do I fix this? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Go to your iPhone's <strong>Settings → Sawa → Notifications</strong> and make sure Allow Notifications is on. Also check that Do Not Disturb is not active. If the issue continues, try logging out and back in to refresh your push token.</p></div>
-      </details>
-
-      <details>
-        <summary>Can I use Sawa on multiple devices? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Currently Sawa is optimized for one device per account. Multi-device support is on our roadmap and will be available in a future update.</p></div>
-      </details>
-
-      <details>
-        <summary>How do I report a bug or send feedback? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Send an email to <a href="mailto:info@sawacouples.com">info@sawacouples.com</a> with a description of the issue, your device model, and iOS version. Screenshots are very helpful!</p></div>
-      </details>
-
-      <details>
-        <summary>What iOS version does Sawa require? <span class="summary-icon">+</span></summary>
-        <div class="faq-body"><p>Sawa requires iOS 16 or later. For the best experience, keep your device updated to the latest iOS version.</p></div>
-      </details>
-
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<section class="section" id="contact">
-  <div class="section-inner">
-    <p class="section-label">Get in Touch</p>
-    <h2>We're always happy to help</h2>
-    <p class="section-sub">Reach out and we'll respond within 24–48 hours, usually much sooner.</p>
-    <div class="contact-grid">
-      <div class="contact-card">
-        <div class="contact-card-icon">✉️</div>
-        <h3>Email Support</h3>
-        <p>For account issues, bugs, or anything else.</p>
-        <a href="mailto:info@sawacouples.com" class="btn btn-primary">info@sawacouples.com</a>
-      </div>
-      <div class="contact-card">
-        <div class="contact-card-icon">📱</div>
-        <h3>In-App Feedback</h3>
-        <p>Use the feedback option in Settings to reach us from inside the app.</p>
-        <span class="btn btn-ghost" style="pointer-events:none;opacity:0.65;">Settings → Feedback</span>
-      </div>
-      <div class="contact-card">
-        <div class="contact-card-icon">⏱️</div>
-        <h3>Response Time</h3>
-        <p>We typically respond within 24–48 hours on business days.</p>
-        <span style="font-size:var(--text-xs);color:var(--color-text-faint);">Sun–Thu · 9 AM–6 PM (GMT+3)</span>
+  <header class="bar">
+    <div class="bar-in">
+      <a class="brand" href="#top" aria-label="Sawa">
+        <img src="icon.png" width="32" height="32" alt="" />
+        <span>Sawa <span class="ar">سوا</span></span>
+      </a>
+      <div class="links">
+        <a class="nav" href="#features" data-i18n="nav.features">Features</a>
+        <a class="nav" href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a class="nav" href="#contact" data-i18n="nav.contact">Contact</a>
+        <button class="chip-btn" id="lang" type="button" aria-label="Change language">العربية</button>
+        <button class="chip-btn" id="theme" type="button" aria-label="Switch between light and dark" data-i18n-aria="theme.aria">
+          <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+        </button>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Sawa — سوا</div>
-    <div class="footer-links">
-      <a href="#features">Features</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-      <a href="mailto:info@sawacouples.com">Email Us</a>
+  <main id="main">
+    <section class="hero" id="top">
+      <img class="app-icon" src="icon.png" width="112" height="112" alt="Sawa app icon" data-i18n-alt="hero.iconAlt" />
+      <p class="eyebrow" data-i18n="hero.eyebrow">A private app for two</p>
+      <h1 data-i18n-html="hero.title">Your shared space, <em>together</em></h1>
+      <p class="lead" data-i18n="hero.lead">A thoughtful space for your shared moments and daily connection: chat, a daily question, memories, games and the everyday things you do as a couple.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6759454290" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-i18n="hero.download">Get it on the App Store</span>
+        </a>
+        <a class="btn btn-soft" href="#faq" data-i18n="hero.help">Help &amp; FAQ</a>
+      </div>
+    </section>
+
+    <section class="block" id="features">
+      <div class="wrap">
+        <p class="label" data-i18n="feat.label">What's inside</p>
+        <h2 data-i18n="feat.title">Everything for the two of you</h2>
+        <p class="sub" data-i18n="feat.sub">One app for the conversation, the memories and the little routines that make a relationship yours.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="chip c-chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+            <h3 data-i18n="feat.chat.t">Private chat</h3>
+            <p data-i18n="feat.chat.d">Messages for just the two of you, with photos, voice messages and reactions.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-ask"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+            <h3 data-i18n="feat.ask.t">A daily question</h3>
+            <p data-i18n="feat.ask.d">A new question every day that you both answer, and a reason to talk about something new.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-mem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <h3 data-i18n="feat.mem.t">Shared memories</h3>
+            <p data-i18n="feat.mem.d">One journal for both of you, with photos, comments and a timeline of your special days.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h4"/><path d="M8 9v4"/><path d="M15 12h.01"/><path d="M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258A4 4 0 0 0 17.32 5z"/></svg></div>
+            <h3 data-i18n="feat.game.t">Games for two</h3>
+            <p data-i18n="feat.game.d">Word games, quizzes, puzzles, drawing and more, to play together even when you're apart.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-tog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h3 data-i18n="feat.tog.t">Everyday tools</h3>
+            <p data-i18n="feat.tog.d">Shared to-do lists, a kitchen with meal planning and groceries, wishlists, movie nights and birthdays.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-faith"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+            <h3 data-i18n="feat.faith.t">Faith, together</h3>
+            <p data-i18n="feat.faith.d">Ramadan, Athkar, duas and a daily check-in, shared with your partner.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="block private" id="private">
+      <div class="wrap">
+        <p class="label" data-i18n="priv.label">Private by design</p>
+        <h2 data-i18n="priv.title">Only the two of you</h2>
+        <p class="sub" data-i18n="priv.sub">Sawa connects exactly two people. There is no feed, no followers and no one else to share with.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="chip c-lock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <h3 data-i18n="priv.a.t">Yours alone</h3>
+            <p data-i18n="priv.a.d">Only the two of you can see anything you share in the app.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+            <h3 data-i18n="priv.b.t">Paired by a code</h3>
+            <p data-i18n="priv.b.d">One of you shares a code, the other enters it. That is the whole of it.</p>
+          </article>
+          <article class="card">
+            <div class="chip c-ask"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <h3 data-i18n="priv.c.t">No location history</h3>
+            <p data-i18n="priv.c.d">If you share your location, only your latest position is kept, never a history. Turning sharing off deletes it.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="start">
+      <div class="wrap">
+        <p class="label" data-i18n="start.label">Getting started</p>
+        <h2 data-i18n="start.title">Ready in three steps</h2>
+        <p class="sub" data-i18n="start.sub">It takes a minute, and you only do it once.</p>
+        <ol class="steps" style="list-style:none">
+          <li class="step">
+            <h3 data-i18n="start.a.t">Sign in with your phone</h3>
+            <p data-i18n="start.a.d">Enter your number and we text you a 6-digit code. New here? Your account is created automatically.</p>
+          </li>
+          <li class="step">
+            <h3 data-i18n="start.b.t">Pair with your partner</h3>
+            <p data-i18n="start.b.d">One of you shares an invite code from the app, the other enters it.</p>
+          </li>
+          <li class="step">
+            <h3 data-i18n="start.c.t">Start sharing</h3>
+            <p data-i18n="start.c.d">Your daily question, a shared journal and games are waiting for you both.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block" id="faq" style="padding-top:0">
+      <div class="wrap">
+        <p class="label" data-i18n="faq.label">FAQ</p>
+        <h2 data-i18n="faq.title">Common questions</h2>
+        <p class="sub" data-i18n="faq.sub">Can't find your answer? Write to us and we'll help.</p>
+        <div class="faq">
+          <details>
+            <summary><span data-i18n="faq.pair.q">How do I connect with my partner?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.pair.a"><p>Tap <strong>Set Up Connection</strong> on Home. One of you shares an invite code and the other enters it. Once the code is accepted, you are connected.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.private.q">Who can see what I share?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.private.a"><p>Only you and your partner. Everything you share in Sawa is visible to the two of you and nobody else. You can read the details in our <a href="https://doc-hosting.flycricket.io/sawa-privacy-policy/a8e8ebc6-aac4-40ac-a03c-ae68450a8a5e/privacy" rel="noopener">Privacy Policy</a>.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.signin.q">I can't sign in or I didn't get my code</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.signin.a"><p>Sawa signs you in with your phone number and a 6-digit code sent by text message. Right now it accepts Jordanian mobile numbers: 9 digits starting with 7. Check the number, check your connection, then choose <strong>Send a new code</strong> when the timer ends. If it still doesn't work, <a href="mailto:info@sawacouples.com">email us</a> and we'll look into it.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.unpair.q">How do I unpair?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.unpair.a"><p>Open <strong>Profile</strong> and choose <strong>Unpair</strong>.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.delete.q">How do I delete my account and data?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.delete.a"><p>Email <a href="mailto:info@sawacouples.com">info@sawacouples.com</a> and ask for your account to be deleted, including the phone number you signed in with. Deleting an account removes the data stored for it, and this can't be undone.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.notif.q">Notifications aren't arriving</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.notif.a"><p>On your iPhone, open <strong>Settings → Sawa → Notifications</strong> and make sure notifications are allowed, and that a Focus mode isn't silencing them. Inside the app, <strong>Profile → Notifications</strong> lets you choose what you get.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.lang.q">Can I use Sawa in Arabic and English?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.lang.a"><p>Yes. Choose <strong>Profile → Language</strong>, then restart the app to finish switching. <strong>Profile → Appearance</strong> sets light, dark, or matching your device.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.bug.q">How do I report a problem or send feedback?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.bug.a"><p>Email <a href="mailto:info@sawacouples.com">info@sawacouples.com</a> with what happened, your iPhone model and iOS version. Screenshots help a lot.</p></div>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.ios.q">Which iPhones does Sawa support?</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <div class="ans" data-i18n-html="faq.ios.a"><p>Sawa is an iPhone app and needs iOS 15.1 or later. Keeping iOS up to date gives you the best experience.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="contact" style="padding-top:0">
+      <div class="wrap">
+        <p class="label" data-i18n="contact.label">Contact</p>
+        <h2 data-i18n="contact.title">We're happy to help</h2>
+        <p class="sub" data-i18n="contact.sub">Write to us about anything: a bug, an account question or an idea.</p>
+        <div class="contact">
+          <article class="card">
+            <div class="chip c-mail"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+            <h3 data-i18n="contact.mail.t">Email support</h3>
+            <p data-i18n="contact.mail.d">For account help, bugs and feedback.</p>
+            <a class="btn btn-primary" href="mailto:info@sawacouples.com"><span dir="ltr">info@sawacouples.com</span></a>
+          </article>
+          <article class="card">
+            <div class="chip c-time"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h3 data-i18n="contact.time.t">Response time</h3>
+            <p data-i18n="contact.time.d">We usually reply within 24–48 hours.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <a class="brand" href="#top">
+        <img src="icon.png" width="28" height="28" alt="" />
+        <span>Sawa <span class="ar">سوا</span></span>
+      </a>
+      <nav aria-label="Footer">
+        <a href="https://doc-hosting.flycricket.io/sawa-privacy-policy/a8e8ebc6-aac4-40ac-a03c-ae68450a8a5e/privacy" rel="noopener" data-i18n="foot.privacy">Privacy Policy</a>
+        <a href="https://doc-hosting.flycricket.io/sawa-terms-of-use/9714243e-8b0b-4ced-8187-53cc8822cd14/terms" rel="noopener" data-i18n="foot.terms">Terms of Use</a>
+        <a href="https://apps.apple.com/app/id6759454290" rel="noopener" data-i18n="foot.store">App Store</a>
+        <a href="mailto:info@sawacouples.com" data-i18n="foot.mail">Email us</a>
+      </nav>
+      <p class="copy" data-i18n="foot.copy">© 2026 Sawa. Made with ♥ for couples.</p>
     </div>
-    <p class="footer-copy">© 2026 Sawa App. All rights reserved. Made with ♥ for couples everywhere.</p>
-  </div>
-</footer>
+  </footer>
 
-<script>
-(function(){
-  const t = document.querySelector("[data-theme-toggle]");
-  const r = document.documentElement;
-  let d = matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light";
-  r.setAttribute("data-theme", d);
-  const sun = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  const moon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  if(t){ t.innerHTML = d==="dark"?sun:moon; t.addEventListener("click",()=>{ d=d==="dark"?"light":"dark"; r.setAttribute("data-theme",d); t.innerHTML=d==="dark"?sun:moon; }); }
-})();
-</script>
+  <script>
+  (function () {
+    var root = document.documentElement;
 
+    // Arabic copy is written as nouns and plurals: the page cannot know who is
+    // reading, and the app holds itself to the same rule.
+    var AR = {
+      'doc.title': 'سوا — تطبيق خاص بشخصين',
+      'doc.desc': 'سوا تطبيق خاص بالأزواج: محادثة وسؤال يومي وذكريات مشتركة وألعاب وأدوات للحياة اليومية. المساعدة والأسئلة الشائعة والتواصل.',
+      'skip': 'تخطي إلى المحتوى',
+      'nav.features': 'المزايا', 'nav.faq': 'الأسئلة الشائعة', 'nav.contact': 'تواصل',
+      'theme.aria': 'التبديل بين الوضع الفاتح والداكن',
+      'hero.iconAlt': 'أيقونة تطبيق سوا',
+      'hero.eyebrow': 'تطبيق خاص بشخصين',
+      'hero.title': 'مساحتكما المشتركة، <em>سوا</em>',
+      'hero.lead': 'مساحة هادئة للحظاتكما المشتركة وتواصلكما اليومي: محادثة وسؤال يومي وذكريات وألعاب وكل ما تفعلانه كثنائي.',
+      'hero.download': 'حمّلوا التطبيق من App Store',
+      'hero.help': 'المساعدة والأسئلة الشائعة',
+      'feat.label': 'ماذا بداخله', 'feat.title': 'كل ما يخص الاثنين',
+      'feat.sub': 'تطبيق واحد للحديث والذكريات والروتين الصغير الذي يجعل العلاقة علاقتكما.',
+      'feat.chat.t': 'محادثة خاصة', 'feat.chat.d': 'رسائل لكما وحدكما، مع الصور والرسائل الصوتية والتفاعلات.',
+      'feat.ask.t': 'سؤال كل يوم', 'feat.ask.d': 'سؤال جديد يوميًا تجيبان عنه معًا، وسبب لحديث جديد.',
+      'feat.mem.t': 'ذكريات مشتركة', 'feat.mem.d': 'دفتر واحد لكما، فيه صور وتعليقات وخط زمني لأيامكما المميزة.',
+      'feat.game.t': 'ألعاب لشخصين', 'feat.game.d': 'ألعاب كلمات واختبارات وألغاز ورسم وغيرها، للعب سوا حتى لو كنتما بعيدين.',
+      'feat.tog.t': 'أدوات يومية', 'feat.tog.d': 'قوائم مهام مشتركة، ومطبخ فيه تخطيط للوجبات والمشتريات، وقوائم أمنيات، وليالي أفلام، وأعياد ميلاد.',
+      'feat.faith.t': 'الإيمان سوا', 'feat.faith.d': 'رمضان والأذكار والأدعية ومتابعة يومية، تشاركانها معًا.',
+      'priv.label': 'خصوصية بالتصميم', 'priv.title': 'لكما وحدكما',
+      'priv.sub': 'سوا يربط شخصين فقط. لا صفحة عامة ولا متابعين ولا أحد غيركما.',
+      'priv.a.t': 'لكما فقط', 'priv.a.d': 'لا يرى ما تشاركانه في التطبيق سواكما.',
+      'priv.b.t': 'الربط برمز', 'priv.b.d': 'واحد منكما يشارك الرمز، والثاني يُدخله. هذا كل شيء.',
+      'priv.c.t': 'بلا سجل مواقع', 'priv.c.d': 'عند مشاركة الموقع يُحفظ آخر موقع فقط، بدون أي سجل. وإيقاف المشاركة يمسحه.',
+      'start.label': 'البداية', 'start.title': 'جاهزان في ثلاث خطوات', 'start.sub': 'دقيقة واحدة، ومرة واحدة فقط.',
+      'start.a.t': 'تسجيل الدخول برقم الهاتف', 'start.a.d': 'إدخال الرقم ثم رمز من 6 أرقام يصل برسالة نصية. حساب جديد؟ يُنشأ تلقائيًا.',
+      'start.b.t': 'الربط مع الشريك', 'start.b.d': 'واحد منكما يشارك رمز الدعوة من التطبيق، والثاني يُدخله.',
+      'start.c.t': 'بدء المشاركة', 'start.c.d': 'السؤال اليومي ودفتر الذكريات والألعاب بانتظاركما.',
+      'faq.label': 'الأسئلة الشائعة', 'faq.title': 'أسئلة متكررة', 'faq.sub': 'لم تجدا إجابتكما؟ راسلونا وسنساعد.',
+      'faq.pair.q': 'كيف أربط حسابي بالشريك؟',
+      'faq.pair.a': '<p>الضغط على <strong>إعداد الاتصال</strong> في الصفحة الرئيسية. واحد منكما يشارك رمز الدعوة والثاني يُدخله، وبعد قبول الرمز يصبح الحسابان مربوطين.</p>',
+      'faq.private.q': 'من يستطيع رؤية ما أشاركه؟',
+      'faq.private.a': '<p>أنت وشريكك فقط. كل ما يُشارك في سوا ظاهر لكما وحدكما. التفاصيل في <a href="https://doc-hosting.flycricket.io/sawa-privacy-policy/a8e8ebc6-aac4-40ac-a03c-ae68450a8a5e/privacy" rel="noopener">سياسة الخصوصية</a>.</p>',
+      'faq.signin.q': 'لا أستطيع تسجيل الدخول أو لم يصل الرمز',
+      'faq.signin.a': '<p>يسجّل سوا الدخول برقم الهاتف ورمز من 6 أرقام يصل برسالة نصية. حاليًا تُقبل أرقام الهواتف الأردنية: 9 أرقام تبدأ بـ 7. تأكدا من الرقم ومن الاتصال بالإنترنت، ثم اختارا <strong>ابعتلي كود جديد</strong> عند انتهاء المؤقت. إن استمرت المشكلة <a href="mailto:info@sawacouples.com">راسلونا</a> وسنتحقق منها.</p>',
+      'faq.unpair.q': 'كيف ألغي الربط؟',
+      'faq.unpair.a': '<p>من تبويب <strong>الملف</strong> اختاروا <strong>إلغاء الربط</strong>.</p>',
+      'faq.delete.q': 'كيف أحذف حسابي وبياناتي؟',
+      'faq.delete.a': '<p>راسلونا على <a href="mailto:info@sawacouples.com">info@sawacouples.com</a> وسنحذف الحساب. اذكروا رقم الهاتف المستخدم في تسجيل الدخول. حذف الحساب يزيل البيانات المحفوظة له ولا يمكن التراجع عنه.</p>',
+      'faq.notif.q': 'الإشعارات لا تصل',
+      'faq.notif.a': '<p>من iPhone افتحوا <strong>الإعدادات ← سوا ← الإشعارات</strong> وتأكدوا من السماح بها، ومن أن وضع التركيز لا يكتمها. وداخل التطبيق يتيح <strong>الملف ← الإشعارات</strong> اختيار ما يصلكم.</p>',
+      'faq.lang.q': 'هل يعمل سوا بالعربية والإنجليزية؟',
+      'faq.lang.a': '<p>نعم. من <strong>الملف ← اللغة</strong>، ثم إعادة تشغيل التطبيق لإكمال التغيير. ومن <strong>الملف ← المظهر</strong> يُختار الوضع الفاتح أو الداكن أو حسب الجهاز.</p>',
+      'faq.bug.q': 'كيف أبلّغ عن مشكلة أو أرسل ملاحظة؟',
+      'faq.bug.a': '<p>راسلونا على <a href="mailto:info@sawacouples.com">info@sawacouples.com</a> مع وصف ما حدث ونوع iPhone وإصدار iOS. لقطات الشاشة مفيدة جدًا.</p>',
+      'faq.ios.q': 'ما أجهزة iPhone المدعومة؟',
+      'faq.ios.a': '<p>سوا تطبيق لـ iPhone ويتطلب iOS 15.1 أو أحدث. تحديث iOS يمنح أفضل تجربة.</p>',
+      'contact.label': 'تواصل', 'contact.title': 'يسعدنا مساعدتكما',
+      'contact.sub': 'راسلونا في أي شيء: خلل أو سؤال عن الحساب أو فكرة.',
+      'contact.mail.t': 'الدعم بالبريد', 'contact.mail.d': 'لمساعدة الحساب والأخطاء والملاحظات.',
+      'contact.time.t': 'مدة الرد', 'contact.time.d': 'نرد عادةً خلال 24–48 ساعة.',
+      'foot.privacy': 'سياسة الخصوصية', 'foot.terms': 'شروط الاستخدام', 'foot.store': 'App Store', 'foot.mail': 'راسلونا',
+      'foot.copy': '© 2026 سوا. صُنع بـ ♥ للأزواج.'
+    };
+
+    // English is the markup itself; remember it so switching back is lossless.
+    var EN = {};
+    var nodes = [].slice.call(document.querySelectorAll('[data-i18n],[data-i18n-html],[data-i18n-alt],[data-i18n-aria]'));
+    nodes.forEach(function (el) {
+      if (el.dataset.i18n) EN[el.dataset.i18n] = el.textContent;
+      if (el.dataset.i18nHtml) EN[el.dataset.i18nHtml] = el.innerHTML;
+      if (el.dataset.i18nAlt) EN[el.dataset.i18nAlt] = el.getAttribute('alt');
+      if (el.dataset.i18nAria) EN[el.dataset.i18nAria] = el.getAttribute('aria-label');
+    });
+    EN['doc.title'] = document.title;
+    var descEl = document.querySelector('meta[name="description"]');
+    EN['doc.desc'] = descEl.getAttribute('content');
+
+    function pick(lang, key) { return lang === 'ar' ? AR[key] : EN[key]; }
+
+    function setLang(lang) {
+      root.setAttribute('lang', lang);
+      root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      nodes.forEach(function (el) {
+        var d = el.dataset;
+        if (d.i18n) el.textContent = pick(lang, d.i18n);
+        if (d.i18nHtml) el.innerHTML = pick(lang, d.i18nHtml);
+        if (d.i18nAlt) el.setAttribute('alt', pick(lang, d.i18nAlt));
+        if (d.i18nAria) el.setAttribute('aria-label', pick(lang, d.i18nAria));
+      });
+      document.title = pick(lang, 'doc.title');
+      descEl.setAttribute('content', pick(lang, 'doc.desc'));
+      var btn = document.getElementById('lang');
+      btn.textContent = lang === 'ar' ? 'English' : 'العربية';
+      btn.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    }
+
+    document.getElementById('lang').addEventListener('click', function () {
+      var next = root.getAttribute('lang') === 'ar' ? 'en' : 'ar';
+      setLang(next);
+      try { localStorage.setItem('sawa-lang', next); } catch (e) {}
+    });
+    if (root.getAttribute('lang') === 'ar') setLang('ar');
+    else document.getElementById('lang').setAttribute('aria-label', 'التبديل إلى العربية');
+
+    // Theme: follows the device until the visitor picks one.
+    var SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+    var MOON = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+    var mq = matchMedia('(prefers-color-scheme: dark)');
+    function isDark() {
+      var t = root.getAttribute('data-theme');
+      return t ? t === 'dark' : mq.matches;
+    }
+    function paintTheme() { document.getElementById('theme-icon').innerHTML = isDark() ? SUN : MOON; }
+    document.getElementById('theme').addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('sawa-theme', next); } catch (e) {}
+      paintTheme();
+    });
+    mq.addEventListener('change', paintTheme);
+    paintTheme();
+  })();
+  </script>
 </body>
 </html>
